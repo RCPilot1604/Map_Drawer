@@ -67,12 +67,15 @@ shinyServer(function(input, output) {
         matrix <- AdjMatrix();
         x_col <- data[input$x_col];
         y_col <- data[input$y_col];
-        print(x_col)
+    
         gg <- ggplot(data = data, mapping = aes_string(x= input$x_col, y= input$y_col)) + geom_point()
         for(i in 1:nrow(matrix)){
             for(j in 1:ncol(matrix)){
                 if(matrix[i,j]==1){
                     gg <- gg + geom_segment(x = x_col[j,], y = y_col[j,], xend = x_col[i,], yend = y_col[i,], color = "green", data = data, size = 1)
+                    midpoint <- c((x_col[i,] + x_col[j,])/2 , (y_col[i,] + y_col[j,])/2);
+                    length <- round(sqrt((x_col[i,]-x_col[j,])**2 + (y_col[i,]-y_col[j,])**2),3);
+                    gg <- gg + geom_text(x=midpoint[1]+ 10,y=midpoint[2]- 10, label = length);
                 }
             }
         }
