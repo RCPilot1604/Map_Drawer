@@ -23,7 +23,12 @@ shinyUI(fluidPage(
             uiOutput("AdjMatrix_output"),
             uiOutput("Coord_output"),
             uiOutput("x_col_output"),
-            uiOutput("y_col_output")
+            uiOutput("y_col_output"),
+            uiOutput("dp_output"),
+            uiOutput("vertex_output"),
+            uiOutput("length_output"),
+            uiOutput("colour_output"),
+            uiOutput("colour2_output")
         ),
 
         # Show a plot of the generated distribution
