@@ -104,6 +104,9 @@ shinyServer(function(input, output) {
             }
             gg <- gg + geom_text(x=x_col[i,],y=y_col[i,]-250, label = id[i], size = input$vertex_size);
         }
+        pdf("ggplot.pdf")
+        print(gg)
+        dev.off()
         return(gg)
     })
 })
