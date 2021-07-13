@@ -63,6 +63,7 @@ shinyServer(function(input, output) {
     AdjMatrix <- reactive({
         if(is.null(input$CSVIn)){return();}
         upload <- input$CSVIn$datapath[input$CSVIn$name==input$dataSelect_Adj] %>% read.csv();
+        View(upload)
         upload[is.na(upload)] <- 0; #Replace all the NAs with 0
         return(upload);
     })
@@ -88,6 +89,7 @@ shinyServer(function(input, output) {
         matrix <- AdjMatrix();
         x_col <- data[input$x_col];
         y_col <- data[input$y_col];
+        print(x_col)
         id <- data[,1];
     
         gg <- ggplot(data = data, mapping = aes_string(x= input$x_col, y= input$y_col)) + geom_point()
@@ -96,7 +98,10 @@ shinyServer(function(input, output) {
         for(i in 1:nrow(matrix)){
             for(j in 1:ncol(matrix)){
                 if(matrix[i,j]==1){
-                    gg <- gg + geom_segment(x = x_col[j,], y = y_col[j,], xend = x_col[i,], yend = y_col[i,], color = input$col, data = data, size = 1)
+                    print(i)
+                    print(j)
+                    print('next')
+                    gg <- gg + geom_segment(x = x_col[i,], y = y_col[i,], xend = x_col[j,], yend = y_col[j,], color = input$col, data = data, size = 1)
                     midpoint <- c((x_col[i,] + x_col[j,])/2 , (y_col[i,] + y_col[j,])/2);
                     length <- round(sqrt((x_col[i,]-x_col[j,])**2 + (y_col[i,]-y_col[j,])**2),input$dp);
                     gg <- gg + geom_text(x=midpoint[1]+ 10,y=midpoint[2]- 10, label = length, size = input$length_size, colour = input$col2);
